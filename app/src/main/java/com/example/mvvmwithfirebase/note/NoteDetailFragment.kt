@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.example.mvvmwithfirebase.R
 import com.example.mvvmwithfirebase.databinding.FragmentNoteDetailBinding
 import com.example.mvvmwithfirebase.databinding.FragmentNoteListingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteDetailBinding

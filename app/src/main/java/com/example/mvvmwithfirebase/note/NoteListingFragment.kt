@@ -1,6 +1,7 @@
 package com.example.mvvmwithfirebase.note
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,10 @@ import androidx.fragment.app.viewModels
 
 import com.example.mvvmwithfirebase.R
 import com.example.mvvmwithfirebase.databinding.FragmentNoteListingBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.log
 
-
+@AndroidEntryPoint
 class NoteListingFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteListingBinding
@@ -29,7 +32,9 @@ class NoteListingFragment : Fragment() {
 
         viewModel.getNotes()
         viewModel.note.observe(viewLifecycleOwner){
-
+            it.forEach { i ->
+                Log.e("TAG", i.toString())
+            }
         }
     }
 
