@@ -1,28 +1,40 @@
 package com.example.mvvmwithfirebase.data.repository
 
 import com.example.mvvmwithfirebase.data.model.Note
+import com.example.mvvmwithfirebase.util.FireStoreTable
+import com.example.mvvmwithfirebase.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.*
 
-class NoteRepositoryImpl(val database: FirebaseFirestore) :NoteRepository {
+class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteRepository {
 
-    override fun getNotes(): List<Note> {
-        return arrayListOf(
-            Note(
-                id = "ias",
-                text = "hsag 1",
-                date = Date()
-            ),
-            Note(
-                id = "ias",
-                text = "hsag 2",
-                date = Date()
-            ),
-            Note(
-                id = "ias",
-                text = "hsag 3",
-                date = Date()
-            )
-        )
+    override fun getNotes(result: (UiState<List<Note>>) -> Unit) {
+
+        database.collection(FireStoreTable.NOTE)
+            .get()
+            .addOnSuccessListener {
+                val notes = arrayListOf<Note>()
+                for (document in it) {
+                    val note = document.toObject(Note::class.java)
+                    notes.add(note)
+                }
+                result.invoke(UiState.Success(notes))
+            }
+            .addOnFailureListener {
+                result.invoke(UiState.Failure(it.localizedMessage))
+            }
+    }
+
+    override fun addNote(note: Note, result: (UiState<String>) -> Unit) {
+
+        val document = database.collection(FireStoreTable.NOTE).document()
+        note.id = document.id
+
+        document.set(note)
+            .addOnSuccessListener {
+                result.invoke(UiState.Success("Note has been created successfully"))
+            }
+            .addOnFailureListener {
+                result.invoke(UiState.Failure(it.localizedMessage))
+            }
     }
 }
