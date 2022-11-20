@@ -24,14 +24,14 @@ class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteReposito
             }
     }
 
-    override fun addNote(note: Note, result: (UiState<String>) -> Unit) {
+    override fun addNote(note: Note, result: (UiState<Pair<Note,String>>) -> Unit) {
 
         val document = database.collection(FireStoreTable.NOTE).document()
         note.id = document.id
 
         document.set(note)
             .addOnSuccessListener {
-                result.invoke(UiState.Success("Note has been created successfully"))
+                result.invoke(UiState.Success(Pair(note,"Note has been created successfully")))
             }
             .addOnFailureListener {
                 result.invoke(UiState.Failure(it.localizedMessage))

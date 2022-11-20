@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mvvmwithfirebase.R
 import com.example.mvvmwithfirebase.data.model.Note
 import com.example.mvvmwithfirebase.databinding.FragmentNoteListingBinding
@@ -32,16 +34,6 @@ class NoteListingFragment : Fragment() {
                         putString("type", "view")
                         putParcelable("note", item)
                     })
-            }, onDeleteClicked = { pos, item ->
-                deletePosition = pos
-                viewModel.deleteNote(item)
-            }, onEditClicked = { pos, item ->
-                findNavController().navigate(
-                    R.id.action_noteListingFragment_to_noteDetailFragment3,
-                    Bundle().apply {
-                        putString("type", "edit")
-                        putParcelable("note", item)
-                    })
             })
     }
 
@@ -55,8 +47,10 @@ class NoteListingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.itemAnimator=null
+        binding.recyclerView.itemAnimator = null
+        binding.recyclerView.layoutManager = staggeredGridLayoutManager
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_noteListingFragment_to_noteDetailFragment3,
                 Bundle().apply { putString("type", "create") })// fragmentni almashtiradi
@@ -74,23 +68,6 @@ class NoteListingFragment : Fragment() {
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     adapter.updateList(state.data.toMutableList())
-                }
-            }
-        }
-
-        viewModel.deleteNote.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is UiState.Loading -> {
-                    binding.progressBar.show()
-                }
-                is UiState.Failure -> {
-                    binding.progressBar.hide()
-                    toast(state.error)
-                }
-                is UiState.Success -> {
-                    binding.progressBar.hide()
-                    toast(state.data)
-                    adapter.removeItem(deletePosition)
                 }
             }
         }
