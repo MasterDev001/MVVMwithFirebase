@@ -50,4 +50,16 @@ class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteReposito
                 result.invoke(UiState.Failure(it.localizedMessage))
             }
     }
+
+    override fun deleteNote(note: Note, result: (UiState<String>) -> Unit) {
+
+        database.collection(FireStoreTable.NOTE).document(note.id)
+            .delete()
+            .addOnSuccessListener {
+                result.invoke(UiState.Success("Note has been deleted successfully"))
+            }
+            .addOnFailureListener {
+                result.invoke(UiState.Failure(it.localizedMessage))
+            }
+    }
 }
