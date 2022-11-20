@@ -22,6 +22,8 @@ class NoteDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteDetailBinding
     private val viewModel: NoteViewModel by viewModels()
+    private var isEdit = false
+    private var objNote: Note? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +36,28 @@ class NoteDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateUI()
         binding.button.setOnClickListener {
-            if (validation()) {
-                viewModel.addNote(
-                    Note(
-                        id = "",
-                        text = binding.noteMsg.text.toString(),
-                        date = Date()
-                    )
-                )
+            if (isEdit) {
+                updateNote()
+            } else {
+                creteNote()
             }
         }
+    }
+
+
+    private fun creteNote() {
+        if (validation()) {
+            viewModel.addNote(
+                Note(
+                    id = "",
+                    text = binding.noteMsg.text.toString(),
+                    date = Date()
+                )
+            )
+        }
+
         viewModel.addNote.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
@@ -64,6 +77,65 @@ class NoteDetailFragment : Fragment() {
             }
         }
     }
+
+
+    private fun updateNote() {
+        if (validation()) {
+            viewModel.updateNote(
+                Note(
+                    id = objNote?.id ?: "",
+                    text = binding.noteMsg.text.toString(),
+                    date = Date()
+                )
+            )
+        }
+
+        viewModel.updateNote.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> {
+                    binding.btnProgressAr.show()
+                    binding.button.text = ""
+                }
+                is UiState.Failure -> {
+                    binding.btnProgressAr.hide()
+                    binding.button.text = "Update"
+                    toast(state.error)
+                }
+                is UiState.Success -> {
+                    binding.btnProgressAr.hide()
+                    binding.button.text = "Update"
+                    toast(state.data)
+                }
+            }
+        }
+    }
+
+
+    private fun updateUI() {
+        val type = arguments?.getString("type", null)
+        type.let {
+            when (it) {
+                "view" -> {
+                    binding.noteMsg.isEnabled = false
+                    binding.button.hide()
+                    isEdit = false
+                    objNote = arguments?.getParcelable("note")
+                    binding.noteMsg.setText(objNote?.text)
+                }
+                "create" -> {
+                    isEdit = false
+                    binding.button.text = "Create"
+                }
+                "edit" -> {
+                    isEdit = true
+                    objNote = arguments?.getParcelable("note")
+                    binding.noteMsg.setText(objNote?.text)
+                    binding.button.text = "Update"
+                }
+            }
+        }
+    }
+
 
     private fun validation(): Boolean {
         return if (binding.noteMsg.text.toString().isEmpty()) {

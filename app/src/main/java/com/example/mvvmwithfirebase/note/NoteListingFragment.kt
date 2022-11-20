@@ -1,14 +1,12 @@
 package com.example.mvvmwithfirebase.note
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-
 import com.example.mvvmwithfirebase.R
 import com.example.mvvmwithfirebase.databinding.FragmentNoteListingBinding
 import com.example.mvvmwithfirebase.util.UiState
@@ -16,21 +14,32 @@ import com.example.mvvmwithfirebase.util.hide
 import com.example.mvvmwithfirebase.util.show
 import com.example.mvvmwithfirebase.util.toast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 class NoteListingFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteListingBinding
     private val viewModel: NoteViewModel by viewModels()
+
     private val adapter by lazy {
-        NoteListingAdapter(onItemCLicked = { pos, item ->
+        NoteListingAdapter(
+            onItemCLicked = { pos, item ->
+                findNavController().navigate(
+                    R.id.action_noteListingFragment_to_noteDetailFragment3,
+                    Bundle().apply {
+                        putString("type", "view")
+                        putParcelable("note", item)
+                    })
+            }, onDeleteClicked = { pos, item ->
 
-        }, onDeleteClicked = { pos, item ->
-
-        }, onEditClicked = { pos, item ->
-
-        })
+            }, onEditClicked = { pos, item ->
+                findNavController().navigate(
+                    R.id.action_noteListingFragment_to_noteDetailFragment3,
+                    Bundle().apply {
+                        putString("type", "edit")
+                        putParcelable("note", item)
+                    })
+            })
     }
 
     override fun onCreateView(
@@ -43,7 +52,10 @@ class NoteListingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.button.setOnClickListener { findNavController().navigate(R.id.action_noteListingFragment_to_noteDetailFragment3) }// fragmentni almashtiradi
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_noteListingFragment_to_noteDetailFragment3,
+                Bundle().apply { putString("type", "create") })// fragmentni almashtiradi
+        }
         binding.recyclerView.adapter = adapter
         viewModel.getNotes()
         viewModel.note.observe(viewLifecycleOwner) { state ->
