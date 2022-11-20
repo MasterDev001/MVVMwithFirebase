@@ -23,12 +23,12 @@ class NoteListingAdapter(
 
             binding.edit.setOnClickListener {
                 onEditClicked.invoke(
-                    adapterPosition,
+                    bindingAdapterPosition,
                     item
                 )
             } // bosilganini NoteListingFragmentga beryabdi
-            binding.delete.setOnClickListener { onDeleteClicked.invoke(adapterPosition, item) }
-            binding.itemLayout.setOnClickListener { onItemCLicked.invoke(adapterPosition, item) }
+            binding.delete.setOnClickListener { onDeleteClicked.invoke(bindingAdapterPosition, item) }
+            binding.itemLayout.setOnClickListener { onItemCLicked.invoke(bindingAdapterPosition, item) }
         }
     }
 

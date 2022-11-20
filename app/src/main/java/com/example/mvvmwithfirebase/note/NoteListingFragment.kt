@@ -22,7 +22,6 @@ class NoteListingFragment : Fragment() {
     private lateinit var binding: FragmentNoteListingBinding
     private val viewModel: NoteViewModel by viewModels()
     private var deletePosition: Int = -1
-    private var list: MutableList<Note> = arrayListOf()
 
     private val adapter by lazy {
         NoteListingAdapter(
@@ -57,6 +56,7 @@ class NoteListingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.itemAnimator=null
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_noteListingFragment_to_noteDetailFragment3,
                 Bundle().apply { putString("type", "create") })// fragmentni almashtiradi
@@ -73,8 +73,7 @@ class NoteListingFragment : Fragment() {
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
-                    list = state.data.toMutableList()
-                    adapter.updateList(list)
+                    adapter.updateList(state.data.toMutableList())
                 }
             }
         }
@@ -91,10 +90,7 @@ class NoteListingFragment : Fragment() {
                 is UiState.Success -> {
                     binding.progressBar.hide()
                     toast(state.data)
-                    if (deletePosition != -1) {
-                        list.removeAt(deletePosition)
-                        adapter.updateList(list)
-                    }
+                    adapter.removeItem(deletePosition)
                 }
             }
         }
