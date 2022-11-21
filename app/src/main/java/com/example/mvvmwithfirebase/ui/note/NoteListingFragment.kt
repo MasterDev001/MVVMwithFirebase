@@ -1,4 +1,4 @@
-package com.example.mvvmwithfirebase.note
+package com.example.mvvmwithfirebase.ui.note
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -23,7 +23,6 @@ class NoteListingFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteListingBinding
     private val viewModel: NoteViewModel by viewModels()
-    private var deletePosition: Int = -1
 
     private val adapter by lazy {
         NoteListingAdapter(

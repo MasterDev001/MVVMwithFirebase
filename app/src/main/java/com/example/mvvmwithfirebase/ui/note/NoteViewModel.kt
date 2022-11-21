@@ -1,4 +1,4 @@
-package com.example.mvvmwithfirebase.note
+package com.example.mvvmwithfirebase.ui.note
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -41,6 +41,6 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository) 
 
     fun deleteNote(note: Note) {
         _deleteNote.value = UiState.Loading
-        repository.deleteNote(note) { _updateNote.value = it }
+        repository.deleteNote(note) { _deleteNote.value = it }
     }
 }

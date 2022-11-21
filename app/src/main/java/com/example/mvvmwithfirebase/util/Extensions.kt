@@ -66,3 +66,6 @@ fun Context.createDialog(layout: Int, cancelable: Boolean): Dialog {
 val Int.dpToPx: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()   ////// // / /
 
 val Int.pxToDp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+
+fun String.isValidEmail() =
+    isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()  //// / / /

@@ -1,5 +1,6 @@
 package com.example.mvvmwithfirebase.di
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -13,8 +14,13 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFireStoreInstance(): FirebaseFirestore {
+    fun provideFireStoreInstance(): FirebaseFirestore {                        // / / /
         return FirebaseFirestore.getInstance()
+    }
+    @Provides
+    @Singleton
+    fun provideFireAuthInstance(): FirebaseAuth {                            //// / / /
+        return FirebaseAuth.getInstance()
     }
 
 }

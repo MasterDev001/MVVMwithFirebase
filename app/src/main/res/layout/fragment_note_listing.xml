@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_clr"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".note.NoteListingFragment">
+    tools:context=".ui.note.NoteListingFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

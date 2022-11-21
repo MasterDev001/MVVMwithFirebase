@@ -1,4 +1,4 @@
-package com.example.mvvmwithfirebase.note
+package com.example.mvvmwithfirebase.ui.note
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -45,8 +45,8 @@ class NoteDetailFragment : Fragment() {
         observer()
     }
 
-    private fun observer() {
-        viewModel.addNote.observe(viewLifecycleOwner) { state ->
+    private fun observer() { // quydagi funksiyalar bajarilgandan keyin pastga tushsa kerak
+        viewModel.addNote.observe(viewLifecycleOwner) { state ->              // / / / / / /
             when (state) {
                 is UiState.Loading -> {
                     binding.progressBar.show()
@@ -193,8 +193,8 @@ class NoteDetailFragment : Fragment() {
 
     private fun addTags(note: MutableList<String>) {
         if (note.size > 0) {
-            binding.tags.apply {
-                removeAllViews()
+            binding.tags.apply {                                         //// / //
+                removeAllViews()                                        /// / / / /
                 note.forEachIndexed { index, tag ->
                     addChip(tag, true) {
                         if (isEnabled) {                                          //// / / /

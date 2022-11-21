@@ -1,4 +1,4 @@
-package com.example.mvvmwithfirebase.note
+package com.example.mvvmwithfirebase.ui.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

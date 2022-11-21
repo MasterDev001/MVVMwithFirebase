@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/noteListingFragment">
+    app:startDestination="@id/registerFragment2">
 
     <fragment
         android:id="@+id/noteListingFragment"
-        android:name="com.example.mvvmwithfirebase.note.NoteListingFragment"
+        android:name="com.example.mvvmwithfirebase.ui.note.NoteListingFragment"
         android:label="fragment_note_listing"
-        tools:layout="@layout/fragment_note_listing" >
+        tools:layout="@layout/fragment_note_listing">
         <action
             android:id="@+id/action_noteListingFragment_to_noteDetailFragment3"
             app:destination="@id/noteDetailFragment" />
@@ -17,7 +17,15 @@
 
     <fragment
         android:id="@+id/noteDetailFragment"
-        android:name="com.example.mvvmwithfirebase.note.NoteDetailFragment"
+        android:name="com.example.mvvmwithfirebase.ui.note.NoteDetailFragment"
         android:label="fragment_note_detail"
         tools:layout="@layout/fragment_note_detail" />
+    <fragment
+        android:id="@+id/registerFragment2"
+        android:name="com.example.mvvmwithfirebase.ui.auth.RegisterFragment"
+        android:label="RegisterFragment">
+        <action
+            android:id="@+id/action_registerFragment2_to_noteListingFragment"
+            app:destination="@id/noteListingFragment" />
+    </fragment>
 </navigation>

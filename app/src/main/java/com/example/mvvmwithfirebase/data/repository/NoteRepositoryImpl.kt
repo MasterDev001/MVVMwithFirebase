@@ -1,7 +1,7 @@
 package com.example.mvvmwithfirebase.data.repository
 
 import com.example.mvvmwithfirebase.data.model.Note
-import com.example.mvvmwithfirebase.util.FireStoreTable
+import com.example.mvvmwithfirebase.util.FireStoreCollection
 import com.example.mvvmwithfirebase.util.UiState
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -9,7 +9,7 @@ class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteReposito
 
     override fun getNotes(result: (UiState<List<Note>>) -> Unit) {
 
-        database.collection(FireStoreTable.NOTE)
+        database.collection(FireStoreCollection.NOTE)
             .get()
             .addOnSuccessListener {
                 val notes = arrayListOf<Note>()
@@ -26,7 +26,7 @@ class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteReposito
 
     override fun addNote(note: Note, result: (UiState<Pair<Note,String>>) -> Unit) {
 
-        val document = database.collection(FireStoreTable.NOTE).document()
+        val document = database.collection(FireStoreCollection.NOTE).document()
         note.id = document.id
 
         document.set(note)
@@ -40,7 +40,7 @@ class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteReposito
 
     override fun updateNote(note: Note, result: (UiState<String>) -> Unit) {
 
-        val document = database.collection(FireStoreTable.NOTE).document(note.id)
+        val document = database.collection(FireStoreCollection.NOTE).document(note.id)
 
         document.set(note)
             .addOnSuccessListener {
@@ -53,7 +53,7 @@ class NoteRepositoryImpl(private val database: FirebaseFirestore) : NoteReposito
 
     override fun deleteNote(note: Note, result: (UiState<String>) -> Unit) {
 
-        database.collection(FireStoreTable.NOTE).document(note.id)
+        database.collection(FireStoreCollection.NOTE).document(note.id)
             .delete()
             .addOnSuccessListener {
                 result.invoke(UiState.Success("Note has been deleted successfully"))
