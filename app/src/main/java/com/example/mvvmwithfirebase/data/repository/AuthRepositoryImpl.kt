@@ -47,20 +47,26 @@ class AuthRepositoryImpl(val auth: FirebaseAuth, val database: FirebaseFirestore
     }
 
     override fun updateUserInfo(user: User, result: (UiState<String>) -> Unit) {
-        val document = database.collection(FireStoreCollection.USER).document()
+        val document = database.collection(FireStoreCollection.USER).document()       //// / / /
         user.id = document.id
         document.set(user)
             .addOnSuccessListener { result.invoke(UiState.Success("User has been updated successfully")) }
             .addOnFailureListener { result.invoke(UiState.Failure(it.localizedMessage)) }
     }
 
-    override fun loginUser(user: User, result: (UiState<String>) -> Unit) {
-        TODO("Not yet implemented")
+    override fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit) {
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                result.invoke(UiState.Success("Login Successfully"))
+            }
+            .addOnFailureListener {
+                result.invoke(UiState.Failure("Authentication failed, Check Email and Password"))
+            }
     }
 
     override fun forgotPassword(user: User, result: (UiState<String>) -> Unit) {
         TODO("Not yet implemented")
     }
-
 
 }

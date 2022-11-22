@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation"
-    app:startDestination="@id/registerFragment2">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/noteListingFragment"
@@ -27,5 +27,17 @@
         <action
             android:id="@+id/action_registerFragment2_to_noteListingFragment"
             app:destination="@id/noteListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.mvvmwithfirebase.ui.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_noteListingFragment"
+            app:destination="@id/noteListingFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment2"
+            app:destination="@id/registerFragment2" />
     </fragment>
 </navigation>
