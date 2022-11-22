@@ -36,7 +36,9 @@ class LoginFragment : Fragment() {
                 )
             }
         }
-        binding.forgotPassLabel.setOnClickListener { }
+        binding.forgotPassLabel.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
         binding.registerLabel.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment2)
         }
