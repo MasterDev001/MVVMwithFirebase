@@ -79,4 +79,8 @@ class AuthRepositoryImpl(val auth: FirebaseAuth, val database: FirebaseFirestore
             }
     }
 
+    override fun logout(result: () -> Unit) {
+        auth.signOut()
+        result.invoke()
+    }
 }

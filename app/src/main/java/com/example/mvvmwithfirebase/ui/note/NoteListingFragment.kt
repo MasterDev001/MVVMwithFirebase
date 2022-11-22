@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mvvmwithfirebase.R
 import com.example.mvvmwithfirebase.data.model.Note
 import com.example.mvvmwithfirebase.databinding.FragmentNoteListingBinding
+import com.example.mvvmwithfirebase.ui.auth.AuthViewModel
 import com.example.mvvmwithfirebase.util.UiState
 import com.example.mvvmwithfirebase.util.hide
 import com.example.mvvmwithfirebase.util.show
@@ -23,6 +24,7 @@ class NoteListingFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteListingBinding
     private val viewModel: NoteViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
 
     private val adapter by lazy {
         NoteListingAdapter(
@@ -46,6 +48,7 @@ class NoteListingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observer()
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.itemAnimator = null
@@ -54,7 +57,15 @@ class NoteListingFragment : Fragment() {
             findNavController().navigate(R.id.action_noteListingFragment_to_noteDetailFragment3,
                 Bundle().apply { putString("type", "create") })// fragmentni almashtiradi
         }
+        binding.logout.setOnClickListener {
+            authViewModel.logout {
+                findNavController().navigate(R.id.action_noteListingFragment_to_loginFragment)
+            }
+        }
         viewModel.getNotes()
+    }
+
+    private fun observer() {
         viewModel.note.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Loading -> {
