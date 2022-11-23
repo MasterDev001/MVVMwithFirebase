@@ -62,7 +62,9 @@ class NoteListingFragment : Fragment() {
                 findNavController().navigate(R.id.action_noteListingFragment_to_loginFragment)
             }
         }
-        viewModel.getNotes()
+        authViewModel.getSession {
+            viewModel.getNotes(it)
+        }
     }
 
     private fun observer() {

@@ -7,6 +7,7 @@ object FireStoreCollection {
 
 object FireStoreDocumentField {
     const val DATE = "date"
+    const val USER_ID = "user_id"
 }
 
 object SharedPrefConstants {
