@@ -7,6 +7,7 @@ import com.example.mvvmwithfirebase.data.repository.NoteRepository
 import com.example.mvvmwithfirebase.data.repository.NoteRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -20,8 +21,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNoteRepository(database: FirebaseFirestore): NoteRepository {
-        return NoteRepositoryImpl(database)
+    fun provideNoteRepository(
+        database: FirebaseFirestore,
+        storageReference: StorageReference
+    ): NoteRepository {
+        return NoteRepositoryImpl(database,storageReference)
     }
 
     @Provides
@@ -32,6 +36,6 @@ object RepositoryModule {
         appPreferences: SharedPreferences,
         gson: Gson
     ): AuthRepository {
-        return AuthRepositoryImpl(auth, database,appPreferences,gson)
+        return AuthRepositoryImpl(auth, database, appPreferences, gson)
     }
 }
