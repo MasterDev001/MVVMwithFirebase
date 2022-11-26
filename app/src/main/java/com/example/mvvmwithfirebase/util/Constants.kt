@@ -24,3 +24,7 @@ enum class HomeTabs(val index: Int, val key: String) {
     NOTES(0, "notes"),
     TASKS(1, "tasks"),
 }
+
+object FireDatabase{
+    val TASK = "task"
+}

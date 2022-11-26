@@ -1,11 +1,9 @@
 package com.example.mvvmwithfirebase.di
 
 import android.content.SharedPreferences
-import com.example.mvvmwithfirebase.data.repository.AuthRepository
-import com.example.mvvmwithfirebase.data.repository.AuthRepositoryImpl
-import com.example.mvvmwithfirebase.data.repository.NoteRepository
-import com.example.mvvmwithfirebase.data.repository.NoteRepositoryImpl
+import com.example.mvvmwithfirebase.data.repository.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import com.google.gson.Gson
@@ -25,7 +23,7 @@ object RepositoryModule {
         database: FirebaseFirestore,
         storageReference: StorageReference
     ): NoteRepository {
-        return NoteRepositoryImpl(database,storageReference)
+        return NoteRepositoryImpl(database, storageReference)
     }
 
     @Provides
@@ -37,5 +35,11 @@ object RepositoryModule {
         gson: Gson
     ): AuthRepository {
         return AuthRepositoryImpl(auth, database, appPreferences, gson)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTaskRepository(database: FirebaseDatabase): TaskRepository {
+        return TaskRepositoryImpl(database)
     }
 }

@@ -59,11 +59,7 @@ class NoteListingFragment : Fragment() {
             findNavController().navigate(R.id.action_noteListingFragment_to_noteDetailFragment3,
                 Bundle().apply { putString("type", "create") })// fragmentni almashtiradi
         }
-//        binding.logout.setOnClickListener {
-//            authViewModel.logout {
-//                findNavController().navigate(R.id.action_noteListingFragment_to_loginFragment)
-//            }
-//        }
+
         authViewModel.getSession {
             viewModel.getNotes(it)
         }

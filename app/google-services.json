@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "645440837289",
+    "firebase_url": "https://mvvmwithfirebase-70381-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "mvvmwithfirebase-70381",
     "storage_bucket": "mvvmwithfirebase-70381.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "645440837289-m296598d29oncidag1sduarh6gf9oqlj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mvvmwithfirebase",
+            "certificate_hash": "f017238cf6e2c6858b934b800872e714dd7552f9"
+          }
+        },
         {
           "client_id": "645440837289-t92me6rus5n6bqun0tnu0uc9k1lpujlt.apps.googleusercontent.com",
           "client_type": 3

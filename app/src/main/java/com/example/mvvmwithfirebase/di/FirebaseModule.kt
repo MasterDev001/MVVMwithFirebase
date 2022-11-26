@@ -2,6 +2,7 @@ package com.example.mvvmwithfirebase.di
 
 import com.example.mvvmwithfirebase.util.FirebaseStorageConstants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -20,6 +21,7 @@ object FirebaseModule {
     fun provideFireStoreInstance(): FirebaseFirestore {                        // / / /
         return FirebaseFirestore.getInstance()
     }
+
     @Provides
     @Singleton
     fun provideFireAuthInstance(): FirebaseAuth {                            //// / / /
@@ -28,7 +30,13 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseStorageInstance():StorageReference{
-        return FirebaseStorage.getInstance().getReference(FirebaseStorageConstants  .ROOT_DIRECTORY)
+    fun provideFirebaseStorageInstance(): StorageReference {
+        return FirebaseStorage.getInstance().getReference(FirebaseStorageConstants.ROOT_DIRECTORY)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseDatabaseInstance(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
     }
 }
