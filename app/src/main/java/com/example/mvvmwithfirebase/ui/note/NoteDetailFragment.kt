@@ -206,7 +206,7 @@ class NoteDetailFragment : Fragment() {
     private fun onRemoveImage(pos: Int, item: Uri) {
         adapter.removeItem(pos)
         if (objNote != null) {
-            binding.edit.performClick()
+            binding.edit.performClick()// boshqa joyda bosilishini ishga tushirsa kerak
         }
     }
 
@@ -223,7 +223,7 @@ class NoteDetailFragment : Fragment() {
                 binding.tags.apply {                                    //// / / /
                     addChip(text, true) {
                         tagsList.forEachIndexed { index, tag ->
-                            if (text.equals(tag)) {
+                            if (text == tag) {
                                 tagsList.removeAt(index)
                                 binding.tags.removeViewAt(index)           //// / / / / /
                             }
@@ -304,7 +304,7 @@ class NoteDetailFragment : Fragment() {
 
     private fun onDonePress() {
         if (imageUris.isNotEmpty()) {
-            viewModel.onUploadSingleFile(imageUris.first()) { state ->
+            viewModel.onUploadMultipleFile(imageUris) { state ->
                 when (state) {
                     is UiState.Loading -> {
                         binding.progressBar.show()
