@@ -12,10 +12,15 @@ object FireStoreDocumentField {
 
 object SharedPrefConstants {
     const val LOCAL_SHARED_PREF = "local_shared_pref"
-    const val USER_SESSION="user_session"
+    const val USER_SESSION = "user_session"
 }
 
-object FirebaseStorageConstants{
-    const val ROOT_DIRECTORY="app"
-    const val NOTE_IMAGES="note"
+object FirebaseStorageConstants {
+    const val ROOT_DIRECTORY = "app"
+    const val NOTE_IMAGES = "note"
+}
+
+enum class HomeTabs(val index: Int, val key: String) {
+    NOTES(0, "notes"),
+    TASKS(1, "tasks"),
 }
